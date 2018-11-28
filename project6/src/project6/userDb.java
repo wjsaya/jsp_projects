@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 public class userDb {
 	Connection conn = null;
@@ -26,43 +24,45 @@ public class userDb {
 			conn = DriverManager.getConnection(url, user, pass);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			System.out.print("Sorry,can`t find the Driver!");
+			System.out.println("Sorry,can`t find the Driver!");
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
 
-	public boolean doExecute(String sqli, String[] parms) {
+	public int doExecute(String sqli, String[] parms) {
 		//无返回值执行，直接返回真假即可
-		boolean re = false;
+		int re = 0;
 		try {
 			java.sql.PreparedStatement ps = conn.prepareStatement(sqli);
 			for(int i=0; i<parms.length; i++) {
 				ps.setString(i+1, parms[i]);
-				System.out.println(parms[i]);
+		//		System.out.println(parms[i]);
 			}
-			System.out.print(ps.toString());
-			re = ps.execute();
+			System.out.println(ps.toString());
+			re = ps.executeUpdate();
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return re;
 	}
 
-	public ResultSet doQuery(String sqli) {
+	public ResultSet doQuery(String sqli, String[] parms) {
 		//返回结果，ResultSet
 		ResultSet re = null;
 		try {
-			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqli);
-			ResultSet rs = statement.executeQuery(sqli);
-			
-			
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sqli);
+			for(int i=0; i<parms.length; i++) {
+				ps.setString(i+1, parms[i]);
+			}
+			System.out.println("query实际代码：" + ps.toString());
+			re = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return re;
 	}
-	
 	
 }
 // 3 用来执行SQL语句

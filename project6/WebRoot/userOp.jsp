@@ -29,21 +29,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			String op = request.getParameter("op");
 						
 			if ("add".equals(op)) {
-				response.sendRedirect("add.jsp");
+				response.sendRedirect("getInput.jsp?op=add");
+				
 			} else if ("modify".equals(op)) {
-				out.println("修改");
+				String id = request.getParameter("id");
+				response.sendRedirect("getInput.jsp?op=update&id=" + id);
+				
+			} else if ("update".equals(op)) {
+				String id = request.getParameter("id");
+				String name = request.getParameter("name");
+				String count = request.getParameter("count");
+				String sqli = "UPDATE `info` SET `name`=?, `count`=? WHERE `id`=?";
+				
+				project6.userDb mydb = new project6.userDb();
+				int re = mydb.doExecute(sqli, new String[]{name, count, id});
+					if (re != 0) {
+						out.println("<script>alert('修改成功');window.location='index.jsp'</script>");	
+					} else {
+						out.println("<script>alert('修改失败');window.location='index.jsp'</script>");					
+					}
+				
 			} else if ("delete".equals(op)) {
-				out.println("删除");
+				String id = request.getParameter("id");
+				if(id.length() != 0) {//长度非空，删除
+					project6.userDb mydb = new project6.userDb();
+					String sqli = "DELETE FROM `info` WHERE `id`=?;";
+					int re = mydb.doExecute(sqli, new String[]{id});
+					System.out.println(re);
+					if (re != 0) {
+						out.println("<script>alert('删除成功');window.location='index.jsp'</script>");	
+					} else {
+						out.println("<script>alert('删除失败');window.location='index.jsp'</script>");					
+					}
+				}
+				
 			} else if ("insert".equals(op)) {
 				project6.userDb mydb = new project6.userDb();
 				String name = request.getParameter("name");
 				String count = request.getParameter("count");
 				String sqli = "INSERT INTO `info` (`name`, `count`) VALUES(?, ?);";
-				boolean re = mydb.doExecute(sqli, new String[]{name, count});
-				if (re) {
-					out.println("<SCRIPT>ALERT('插入成功');</SCRIPT>");					
+				int re = mydb.doExecute(sqli, new String[]{name, count});
+				
+				if (re != 0) {
+					out.println("<script>alert('插入成功');window.location='index.jsp'</script>");	
 				} else {
-					out.println("<SCRIPT>ALERT('插入失败');</SCRIPT>");						
+					out.println("<script>alert('插入失败');window.location='insert.jsp'</script>");					
 				}
 				
 			}  else {

@@ -19,9 +19,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
   </head>
   
-  <body align=center>
+  <body style="text-align:center">
 	<h3>数据库增删查改</h3>
 	<a href="userOp.jsp?op=add" >插入新数据</a>
+<br><br><br>
 	<table border="1px"  align=center>
 		<tr>
 			<td>编号</td>
