@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				String name = null;
 				String count = null;
 				while (rs.next()) {
-					id = rs.getString("id");	
+					id = rs.getString("id");
 					name = rs.getString("name");	
 					count = rs.getString("count"); 
 					String modify = "<a href='userOp.jsp?op=modify&id=" + id + "'>修改</a>";

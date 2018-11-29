@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 
 <%
@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'do_add.jsp' starting page</title>
+    <title>userOp</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -26,6 +26,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
 		<%
+			request.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("utf-8");
+			
 			String op = request.getParameter("op");
 						
 			if ("add".equals(op)) {
@@ -38,6 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			} else if ("update".equals(op)) {
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
+				System.out.println("userOp:" + name);
 				String count = request.getParameter("count");
 				String sqli = "UPDATE `info` SET `name`=?, `count`=? WHERE `id`=?";
 				

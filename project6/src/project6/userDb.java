@@ -39,6 +39,8 @@ public class userDb {
 				ps.setString(i+1, parms[i]);
 		//		System.out.println(parms[i]);
 			}
+			System.out.println("doExecute方法");
+			System.out.println(parms[0]);
 			System.out.println(ps.toString());
 			re = ps.executeUpdate();
 			ps.close();
@@ -63,17 +65,5 @@ public class userDb {
 		}
 		return re;
 	}
-	
 }
-// 3 用来执行SQL语句
 
-/*
- * String name = request.getParameter("name"); int count =
- * Integer.valueOf(request.getParameter("count")); String
- * sql="Insert into info(name, count) values(?,?)";
- * 
- * PreparedStatement pstmt = conn.prepareStatement(sql); pstmt.setString(1,
- * name); pstmt.setInt(2, count); if (pstmt.executeUpdate() == 1) {
- * out.print("数据插入成功！"); } else { out.print("数据插入失败！"); } pstmt.close();
- * conn.close();
- */
